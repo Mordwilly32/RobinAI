@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Asistente AI Avanzado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loader-cube"></div>
+        <div class="loading-text">Iniciando asistente AI...</div>
+    </div>
+
+    <main class="container" id="main-interface" role="main">
+        <div class="header-section">
+            <div class="ai-title">
+                <h1>Asistente Inteligente</h1>
+                <p class="lead">Tu compañero AI para educación y análisis de contenido.</p>
+            </div>
+        </div>
+
+        <div class="ai-image-container">
+            <img id="thumb-up-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2JtOGhxd3hhNDZ4MDU3ZG5sOWQydXlnOHFia212NmQwdmF4enN0eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BGGsR9l6M749rJS/giphy.gif" alt="Pulgar arriba">
+            <img id="hand-wave-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3d4b2N0czZjdWljcWd3ZzQ1dnExNnBmbWJscTh6NmtpYjV2aWpkeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o751UaH52m0k7Q18M/giphy.gif" alt="Mano saludando">
+        </div>
+
+        <div class="main-content-area">
+            <div class="ai-chat-box" aria-live="polite">
+                <div class="ai-message" id="aiPrompt">
+                    <span class="ai-icon">✨</span> Hola, soy tu Asistente Inteligente. Por favor, selecciona tu grado escolar para empezar.
+                </div>
+                <div class="grade-grid" id="gradeGrid" role="list">
+                    <button class="btn" data-grade="1">1º Grado</button>
+                    <button class="btn" data-grade="2">2º Grado</button>
+                    <button class="btn" data-grade="3">3º Grado</button>
+                    <button class="btn" data-grade="4">4º Grado</button>
+                    <button class="btn" data-grade="5">5º Grado</button>
+                    <button class="btn" data-grade="6">6º Grado</button>
+                    <button class="btn" data-grade="7">7º Grado</button>
+                    <button class="btn" data-grade="8">8º Grado</button>
+                    <button class="btn" data-grade="9">9º Grado</button>
+                </div>
+                <div class="text-input-area" id="textSection">
+                    <label for="documentText">Pega el texto que deseas que el Asistente AI analice:</label>
+                    <textarea id="documentText" placeholder="Pega tu texto aquí para iniciar el análisis..."></textarea>
+                    <label for="topicInput">Introduce el tema del texto (ej: "La importancia del agua"):</label>
+                    <input type="text" id="topicInput" placeholder="Ej: La importancia del agua">
+                    <button class="analyze-btn" id="analyzeBtn">Analizar Texto</button>
+                    <div class="ai-message" id="analyzeStatus" style="display:none; margin-top:5px;">
+                        <span class="ai-icon">🧠</span> <span id="analyzeStatusText"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-display" aria-live="polite">
+                <p class="grade-title" id="resultTitle">Información Detallada</p>
+                <p class="grade-desc" id="resultText">El Asistente AI está esperando tu selección de grado o la introducción de un texto para analizar.</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="clear-btn" id="resetBtn">Reiniciar Asistente</button>
+            <div class="footer">Demo de Asistente AI avanzada.</div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
