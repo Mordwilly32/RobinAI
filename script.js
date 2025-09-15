@@ -34,14 +34,6 @@ const descriptions = {
     9: {
         title: 'Noveno',
         text: 'Noveno es un año de consolidación académica, preparando a los estudiantes para etapas superiores con materias más exigentes y una mayor responsabilidad en el aprendizaje autónomo. Se orienta al desarrollo de metas personales y la toma de decisiones informadas sobre su futuro educativo.'
-    },
-    10: {
-        title: '1º Bachillerato',
-        text: 'En 1º de Bachillerato, se exige un alto nivel de análisis, síntesis e investigación. El enfoque se centra en la preparación para la universidad y en la especialización de áreas de estudio. Los trabajos requieren profundidad argumentativa, uso de fuentes confiables y una estructura formal.'
-    },
-    11: {
-        title: '2º Bachillerato',
-        text: 'El 2º de Bachillerato es la etapa final de la educación preuniversitaria. Los trabajos académicos deben reflejar un dominio avanzado de la materia, con capacidad para formular argumentos originales, realizar investigaciones exhaustivas y presentar conclusiones sólidas y bien fundamentadas. Se prioriza la excelencia y el rigor intelectual.'
     }
 };
 
@@ -54,9 +46,7 @@ const difficultyFactors = {
     6: 180,
     7: 200,
     8: 220,
-    9: 250,
-    10: 350,
-    11: 450
+    9: 250
 };
 
 const buttons = document.querySelectorAll('.btn');
@@ -68,13 +58,12 @@ const textSection = document.getElementById('textSection');
 const documentText = document.getElementById('documentText');
 const topicInput = document.getElementById('topicInput');
 const analyzeBtn = document.getElementById('analyzeBtn');
-const generateBtn = document.getElementById('generateBtn');
 const analyzeStatus = document.getElementById('analyzeStatus');
 const analyzeStatusText = document.getElementById('analyzeStatusText');
 const loadingScreen = document.getElementById('loading-screen');
 const mainInterface = document.getElementById('main-interface');
-const thumbUpImg = document.getElementById('thumb-up-img');
-const handWaveImg = document.getElementById('hand-wave-img');
+const thumbUpGif = document.getElementById('thumb-up-gif');
+const handWaveGif = document.getElementById('hand-wave-gif');
 
 let selectedGrade = null;
 
@@ -90,12 +79,12 @@ function displayAnalyzeStatus(message, isError = false) {
 }
 
 function showGesture(gesture) {
-    thumbUpImg.style.display = 'none';
-    handWaveImg.style.display = 'none';
+    thumbUpGif.style.display = 'none';
+    handWaveGif.style.display = 'none';
     if (gesture === 'thumb-up') {
-        thumbUpImg.style.display = 'block';
+        thumbUpGif.style.display = 'block';
     } else if (gesture === 'hand-wave') {
-        handWaveImg.style.display = 'block';
+        handWaveGif.style.display = 'block';
     }
 }
 
@@ -107,7 +96,7 @@ function selectGrade(n) {
 
     displayAiMessage(`Procesando información del grado **${g.title}**...`);
     setTimeout(() => {
-        displayAiMessage(`¡Información obtenida! Aquí tienes la descripción de **${g.title}**. Ahora, puedes pegar o generar tu texto para un análisis.`);
+        displayAiMessage(`¡Información obtenida! Aquí tienes la descripción de **${g.title}**. Ahora, puedes pegar tu texto para un análisis.` );
     }, 700);
 
     resultTitle.textContent = `Información del Grado: ${g.title}`;
@@ -117,34 +106,6 @@ function selectGrade(n) {
     documentText.value = '';
     topicInput.value = '';
     showGesture('hand-wave');
-}
-
-function getSuggestions(finalScore, wordCountScore, topicRelevanceScore) {
-    let suggestions = '';
-
-    if (finalScore >= 8) {
-        suggestions = `¡Excelente trabajo! Has demostrado una gran habilidad. Sigue practicando para mantener tu nivel.`;
-    } else if (finalScore >= 5) {
-        if (wordCountScore < 5 && topicRelevanceScore >= 5) {
-            suggestions = `Tu texto es relevante para el tema, pero es un poco corto. Intenta expandir tus ideas con más detalles y ejemplos para mejorar la puntuación de extensión.`;
-        } else if (wordCountScore >= 5 && topicRelevanceScore < 5) {
-            suggestions = `La extensión de tu texto es buena, pero parece que no está muy enfocado en el tema. Revisa el tema y asegúrate de que tus ideas principales se conecten directamente con él.`;
-        } else {
-            suggestions = `Tu texto tiene una buena base, pero hay espacio para mejorar tanto en extensión como en relevancia. Intenta expandir tus ideas y asegurarte de que cada punto se relacione con el tema.`;
-        }
-    } else {
-        if (wordCountScore < 3 && topicRelevanceScore < 3) {
-            suggestions = `Tu texto es muy corto y no parece estar muy relacionado con el tema. Se recomienda leer más sobre el tema antes de escribir y usar oraciones más completas.`;
-        } else if (wordCountScore < 3) {
-            suggestions = `Tu texto es demasiado corto para un análisis completo. Intenta escribir más párrafos y desarrollar tus ideas para que el asistente pueda darte una mejor retroalimentación.`;
-        } else if (topicRelevanceScore < 3) {
-            suggestions = `Tu texto no parece abordar el tema de manera efectiva. Vuelve a leer la pregunta o el tema que te dieron y reescribe tu texto para que tus ideas se centren en ello.`;
-        } else {
-            suggestions = `Hay varias áreas de oportunidad. Te sugerimos revisar la estructura de tus párrafos y asegurarte de que tu texto se relacione claramente con el tema en todo momento.`;
-        }
-    }
-
-    return `<div class="suggestion-box"><p class="grade-title" style="margin-bottom: 5px;">Sugerencias del Asistente AI:</p><p class="grade-desc">${suggestions}</p></div>`;
 }
 
 function analyzeDocument() {
@@ -171,19 +132,22 @@ function analyzeDocument() {
     showGesture('hand-wave');
 
     setTimeout(() => {
+        // Calcular la puntuación de relevancia del tema
         let relevanceCount = 0;
         topicWords.forEach(topicWord => {
             const regex = new RegExp(`\\b${topicWord}\\b`, 'gi');
             if (textContent.match(regex)) {
-                relevanceCount++;
+                 relevanceCount++;
             }
         });
 
         const topicRelevanceScore = topicWords.length > 0 ? (relevanceCount / topicWords.length) * 10 : 0;
 
+        // Obtener el factor de dificultad del grado seleccionado
         const difficulty = difficultyFactors[selectedGrade] || 100;
         const wordCountScore = Math.min((wordCount / difficulty) * 10, 10);
 
+        // Puntuación final, ponderando el 50% para cada factor
         const finalScore = ((wordCountScore * 0.5) + (topicRelevanceScore * 0.5)).toFixed(1);
 
         let resultMessage = `<p class="grade-title">Resultados del Análisis AI</p>`;
@@ -193,8 +157,16 @@ function analyzeDocument() {
         resultMessage += `<p class="grade-desc">  - **Puntuación de Relevancia del Tema:** ${topicRelevanceScore.toFixed(1)}/10</p>`;
         resultMessage += `<p class="grade-desc">  - **Puntuación Final Combinada:** <span style="font-size: 1.2rem; font-weight: bold; color: var(--accent-color);">${finalScore}/10</span></p>`;
 
-        const suggestions = getSuggestions(finalScore, wordCountScore, topicRelevanceScore);
-        resultMessage += suggestions;
+        if (finalScore >= 8) {
+            resultMessage += `<p class="grade-desc">¡Análisis completado con éxito! Tu texto demuestra una excelente extensión y una gran relevancia con el tema. ¡Magnífico trabajo!</p>`;
+            showGesture('thumb-up');
+        } else if (finalScore >= 5) {
+            resultMessage += `<p class="grade-desc">Análisis completo. Tu texto tiene una buena base, pero puedes mejorarlo añadiendo más detalles o asegurándote de que todas las ideas se relacionen con el tema.</p>`;
+            showGesture('hand-wave');
+        } else {
+            resultMessage += `<p class="grade-desc">Análisis completo. La extensión o la relevancia del texto es limitada. Se recomienda expandirlo o revisar la conexión con el tema para mejorar la puntuación.</p>`;
+            showGesture('hand-wave');
+        }
 
         displayAnalyzeStatus('Análisis de texto completado.', false);
         resultTitle.innerHTML = '';
@@ -202,33 +174,8 @@ function analyzeDocument() {
     }, 2000);
 }
 
-function generateText() {
-    if (!selectedGrade || !topicInput.value.trim()) {
-        displayAnalyzeStatus('Por favor, selecciona un grado y escribe un tema para generar texto.', true);
-        showGesture('hand-wave');
-        return;
-    }
-
-    const topic = topicInput.value.trim();
-    const difficulty = difficultyFactors[selectedGrade];
-    const sampleText = `El tema de ${topic} es muy interesante. Según la perspectiva de un estudiante de **${descriptions[selectedGrade].title}**, es crucial entender cómo este tema se relaciona con otros aspectos del conocimiento. Se puede argumentar que la relevancia de ${topic} reside en su impacto directo en nuestra vida diaria y en los avances tecnológicos. Por ejemplo, la aplicación de principios relacionados con ${topic} ha permitido innovaciones significativas en campos como la ciencia y la tecnología. En resumen, el estudio de ${topic} no solo enriquece nuestro conocimiento, sino que también nos prepara para los desafíos del futuro.`;
-
-    displayAnalyzeStatus('Generando texto de ejemplo...');
-    showGesture('hand-wave');
-
-    setTimeout(() => {
-        const words = sampleText.split(' ');
-        let generatedWords = words.slice(0, Math.min(difficulty, words.length));
-        documentText.value = generatedWords.join(' ') + (difficulty > words.length ? '...' : '');
-
-        displayAnalyzeStatus('Texto de ejemplo generado. Ahora puedes analizarlo.', false);
-        showGesture('thumb-up');
-    }, 2000);
-}
-
 buttons.forEach(btn => btn.addEventListener('click', () => selectGrade(btn.dataset.grade)));
 analyzeBtn.addEventListener('click', analyzeDocument);
-generateBtn.addEventListener('click', generateText);
 
 resetBtn.addEventListener('click', () => {
     buttons.forEach(b => b.dataset.selected = 'false');
