@@ -116,7 +116,6 @@ body::before {
     color: var(--accent-color);
     text-shadow: 0 0 10px rgba(0, 188, 212, 0.7);
 }
-
 .ai-title p.lead {
     font-size: 1rem;
     color: var(--muted-text-color);
@@ -159,18 +158,15 @@ body::before {
 .main-content-area::-webkit-scrollbar {
     width: 8px;
 }
-
 .main-content-area::-webkit-scrollbar-track {
     background: var(--card-color);
     border-radius: 10px;
 }
-
 .main-content-area::-webkit-scrollbar-thumb {
     background: var(--accent-color);
     border-radius: 10px;
     border: 2px solid var(--card-color);
 }
-
 .main-content-area::-webkit-scrollbar-thumb:hover {
     background: #00e0ff;
 }
@@ -196,13 +192,11 @@ body::before {
     gap: 10px;
     border-left: 3px solid var(--accent-color);
 }
-
 .ai-message.error {
     background: rgba(255, 99, 71, 0.1);
     border-left: 3px solid #ff6347;
     color: #ff6347;
 }
-
 .ai-message.error .ai-icon {
     color: #ff6347;
 }
@@ -237,7 +231,6 @@ body::before {
     background: rgba(0, 188, 212, 0.15);
     border-color: var(--accent-color);
 }
-
 .btn:active {
     transform: translateY(1px);
 }
@@ -258,18 +251,12 @@ body::before {
     border-top: 1px solid var(--border-color);
 }
 
-.text-input-area .button-group {
-    display: flex;
-    gap: 10px;
-}
-
 .text-input-area label {
     color: var(--muted-text-color);
     font-size: 0.9rem;
 }
 
-.text-input-area textarea,
-.text-input-area input[type="text"] {
+.text-input-area textarea, .text-input-area input[type="text"] {
     width: 100%;
     background: var(--bg-color);
     border: 1px solid var(--border-color);
@@ -282,23 +269,19 @@ body::before {
     transition: border-color .2s ease, box-shadow .2s ease;
 }
 
-.text-input-area textarea:focus,
-.text-input-area input[type="text"]:focus {
+.text-input-area textarea:focus, .text-input-area input[type="text"]:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 10px var(--glow-color);
 }
-
 .text-input-area textarea {
     height: 120px;
 }
-
 .text-input-area input[type="text"] {
     height: 40px;
 }
 
 
-.analyze-btn,
-.generate-btn {
+.analyze-btn {
     background: var(--accent-color);
     border: 1px solid var(--accent-color);
     padding: 10px 15px;
@@ -311,27 +294,13 @@ body::before {
     transition: all .2s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    flex-grow: 1;
-}
-
-.generate-btn {
-    background: transparent;
-    border: 1px dashed var(--accent-color);
-    color: var(--accent-color);
-}
-
-.generate-btn:hover {
-    background: rgba(0, 188, 212, 0.15);
-    box-shadow: 0 0 15px var(--glow-color);
 }
 
 .analyze-btn:hover {
     background: #00e0ff;
     box-shadow: 0 0 15px var(--glow-color);
 }
-
-.analyze-btn:active,
-.generate-btn:active {
+.analyze-btn:active {
     transform: translateY(1px);
 }
 
@@ -350,19 +319,10 @@ body::before {
     margin-bottom: 10px;
     color: var(--accent-color);
 }
-
 .result-display .grade-desc {
     color: var(--text-color);
     line-height: 1.6;
     font-size: 0.95rem;
-}
-
-.suggestion-box {
-    background: rgba(0, 188, 212, 0.1);
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 3px solid var(--accent-color);
-    margin-top: 15px;
 }
 
 .controls {
@@ -384,7 +344,6 @@ body::before {
     cursor: pointer;
     transition: border-color .2s ease, color .2s ease;
 }
-
 .clear-btn:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
@@ -396,45 +355,39 @@ body::before {
     margin-left: auto;
 }
 
-@media (max-width:880px) {
+@media (max-width:880px){
     .container {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto 1fr;
         height: 90vh;
     }
-
     .header-section {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
-
     .ai-image-container {
         width: 100%;
         height: 120px;
         grid-row: 2;
         grid-column: 1;
     }
-
     .main-content-area {
         grid-row: 3;
         grid-column: 1;
         padding-right: 0;
     }
-
     .controls {
         grid-row: 4;
         grid-column: 1;
         flex-direction: column;
         align-items: stretch;
     }
-
     .footer {
         margin-left: 0;
         text-align: center;
         margin-top: 10px;
     }
-
     .grade-grid {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     }
