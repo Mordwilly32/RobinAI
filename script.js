@@ -1,202 +1,162 @@
-const descriptions = {
-    1: {
-        title: 'Primero',
-        text: 'En Primero, el enfoque se centra en el descubrimiento de letras, números y el desarrollo de la coordinación motora. Los estudiantes aprenden a leer palabras simples, a contar con confianza y a colaborar en actividades grupales. Es un año fundamental para el despertar de la curiosidad y los primeros logros académicos.'
+const chatBox = document.getElementById('chatBox');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const aiAvatar = document.getElementById('aiAvatar');
+
+let state = 'ask_grade';
+let selectedGrade = null;
+
+const responses = {
+    ask_grade: {
+        text: '✨ Hola, soy tu Asistente Inteligente. Por favor, escribe el número de tu grado escolar (ej: "1" o "tercero") para empezar.',
+        avatar: 'RR2.png',
+        jump: true,
     },
-    2: {
-        title: 'Segundo',
-        text: 'En Segundo, se refuerzan intensamente las habilidades de lectura y escritura, con la introducción a párrafos sencillos y la construcción de oraciones más complejas. Las matemáticas avanzan con sumas y restas más elaboradas. También se fomenta la autonomía y responsabilidad con tareas específicas.'
+    ask_topic: {
+        text: '¡Perfecto! Has seleccionado el grado **${grade}**. Ahora, dime en qué te puedo ayudar o qué texto quieres que revise.',
+        avatar: 'RR2.png',
+        jump: true,
     },
-    3: {
-        title: 'Tercero',
-        text: 'Tercero introduce a los estudiantes en operaciones básicas con mayor profundidad y la creación de textos narrativos cortos. Se exploran activamente las ciencias y el estudio del entorno, desarrollando el pensamiento lógico y la adquisición de hábitos de estudio eficientes.'
+    processing_text: {
+        text: 'Estoy procesando la información. Esto podría tardar un momento...',
+        avatar: 'RR3.png',
+        jump: true,
     },
-    4: {
-        title: 'Cuarto',
-        text: 'Cuarto se caracteriza por la intensificación de proyectos grupales, el desarrollo de la lectura comprensiva y la resolución de problemas más complejos. Se introducen temas de geografía, historia local y experimentos científicos básicos, aumentando progresivamente las responsabilidades académicas.'
+    final_result: {
+        text: 'Análisis completado. Tu texto es [calidad]. ¿Puedo ayudarte con algo más?',
+        avatar: 'RR2.png',
+        jump: true,
     },
-    5: {
-        title: 'Quinto',
-        text: 'En Quinto, el estudiante se prepara para desafíos educativos significativos: textos más extensos, operaciones de multiplicación y división avanzadas, y trabajos basados en proyectos. Se prioriza el desarrollo de la autonomía, la organización personal y el pensamiento crítico elemental.'
+    error: {
+        text: 'Lo siento, no entendí tu respuesta. Por favor, intenta de nuevo.',
+        avatar: 'RR3.png',
+        jump: true,
     },
-    6: {
-        title: 'Sexto',
-        text: 'Sexto marca la transición hacia la educación secundaria, introduciendo materias separadas, lectura analítica y conceptos más abstractos en matemáticas y ciencias. Se pone especial énfasis en la investigación, las presentaciones orales y el fomento del trabajo colaborativo.'
-    },
-    7: {
-        title: 'Séptimo',
-        text: 'Séptimo se enfoca en desarrollar competencias avanzadas: introducción al álgebra, comprensión lectora profunda y aplicación del método científico en ciencias. Se comienzan a explorar habilidades vitales y a gestionar proyectos de mayor duración.'
-    },
-    8: {
-        title: 'Octavo',
-        text: 'En Octavo, se profundiza en el pensamiento crítico, la resolución de problemas complejos y la ejecución de proyectos interdisciplinarios. Los estudiantes perfeccionan sus técnicas de estudio y empiezan a considerar sus futuras trayectorias académicas.'
-    },
-    9: {
-        title: 'Noveno',
-        text: 'Noveno es un año de consolidación académica, preparando a los estudiantes para etapas superiores con materias más exigentes y una mayor responsabilidad en el aprendizaje autónomo. Se orienta al desarrollo de metas personales y la toma de decisiones informadas sobre su futuro educativo.'
-    }
+};
+
+const gradeMap = {
+    '1': 'Primero',
+    '2': 'Segundo',
+    '3': 'Tercero',
+    '4': 'Cuarto',
+    '5': 'Quinto',
+    '6': 'Sexto',
+    '7': 'Séptimo',
+    '8': 'Octavo',
+    '9': 'Noveno',
+    'primero': 'Primero',
+    'segundo': 'Segundo',
+    'tercero': 'Tercero',
+    'cuarto': 'Cuarto',
+    'quinto': 'Quinto',
+    'sexto': 'Sexto',
+    'septimo': 'Séptimo',
+    'octavo': 'Octavo',
+    'noveno': 'Noveno'
 };
 
 const difficultyFactors = {
-    1: 80,
-    2: 100,
-    3: 120,
-    4: 140,
-    5: 160,
-    6: 180,
-    7: 200,
-    8: 220,
-    9: 250
+    1: 80, 2: 100, 3: 120, 4: 140, 5: 160, 6: 180, 7: 200, 8: 220, 9: 250
 };
 
-const buttons = document.querySelectorAll('.btn');
-const resultTitle = document.getElementById('resultTitle');
-const resultText = document.getElementById('resultText');
-const resetBtn = document.getElementById('resetBtn');
-const aiPrompt = document.getElementById('aiPrompt');
-const textSection = document.getElementById('textSection');
-const documentText = document.getElementById('documentText');
-const topicInput = document.getElementById('topicInput');
-const analyzeBtn = document.getElementById('analyzeBtn');
-const analyzeStatus = document.getElementById('analyzeStatus');
-const analyzeStatusText = document.getElementById('analyzeStatusText');
-const loadingScreen = document.getElementById('loading-screen');
-const mainInterface = document.getElementById('main-interface');
-const thumbUpGif = document.getElementById('thumb-up-gif');
-const handWaveGif = document.getElementById('hand-wave-gif');
-
-let selectedGrade = null;
-
-function displayAiMessage(message) {
-    aiPrompt.innerHTML = `<span class="ai-icon">✨</span> ${message}`;
+function displayMessage(message, sender = 'ai') {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', `${sender}-message`);
+    messageDiv.innerHTML = `<p>${message}</p>`;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function displayAnalyzeStatus(message, isError = false) {
-    analyzeStatus.style.display = 'flex';
-    analyzeStatusText.textContent = message;
-    analyzeStatus.classList.toggle('error', isError);
-    analyzeStatus.querySelector('.ai-icon').textContent = isError ? '⚠️' : '🧠';
+function updateAvatar(newSrc, shouldJump) {
+    aiAvatar.src = newSrc;
+    aiAvatar.classList.toggle('jump-animation', shouldJump);
 }
 
-function showGesture(gesture) {
-    thumbUpGif.style.display = 'none';
-    handWaveGif.style.display = 'none';
-    if (gesture === 'thumb-up') {
-        thumbUpGif.style.display = 'block';
-    } else if (gesture === 'hand-wave') {
-        handWaveGif.style.display = 'block';
-    }
-}
-
-function selectGrade(n) {
-    buttons.forEach(b => b.dataset.selected = (b.dataset.grade == n));
-    selectedGrade = n;
-    const g = descriptions[n];
-    if (!g) return;
-
-    displayAiMessage(`Procesando información del grado **${g.title}**...`);
-    setTimeout(() => {
-        displayAiMessage(`¡Información obtenida! Aquí tienes la descripción de **${g.title}**. Ahora, puedes pegar tu texto para un análisis.` );
-    }, 700);
-
-    resultTitle.textContent = `Información del Grado: ${g.title}`;
-    resultText.textContent = g.text;
-    textSection.style.display = 'flex';
-    analyzeStatus.style.display = 'none';
-    documentText.value = '';
-    topicInput.value = '';
-    showGesture('hand-wave');
-}
-
-function analyzeDocument() {
-    const textContent = documentText.value.trim();
-    const topic = topicInput.value.trim();
-
-    if (!selectedGrade) {
-        displayAnalyzeStatus('Por favor, selecciona primero un grado escolar.', true);
-        showGesture('hand-wave');
-        return;
-    }
-
-    if (textContent.length === 0 || topic.length === 0) {
-        displayAnalyzeStatus('Por favor, introduce tanto el texto como el tema para analizar.', true);
-        showGesture('hand-wave');
-        return;
-    }
-
-    const words = textContent.toLowerCase().split(/\s+/).filter(word => word.length > 0);
-    const wordCount = words.length;
-    const topicWords = topic.toLowerCase().split(/\s+/).filter(word => word.length > 0);
-
-    displayAnalyzeStatus('Generando análisis del texto...');
-    showGesture('hand-wave');
-
-    setTimeout(() => {
-        // Calcular la puntuación de relevancia del tema
-        let relevanceCount = 0;
-        topicWords.forEach(topicWord => {
-            const regex = new RegExp(`\\b${topicWord}\\b`, 'gi');
-            if (textContent.match(regex)) {
-                 relevanceCount++;
-            }
-        });
-
-        const topicRelevanceScore = topicWords.length > 0 ? (relevanceCount / topicWords.length) * 10 : 0;
-
-        // Obtener el factor de dificultad del grado seleccionado
-        const difficulty = difficultyFactors[selectedGrade] || 100;
-        const wordCountScore = Math.min((wordCount / difficulty) * 10, 10);
-
-        // Puntuación final, ponderando el 50% para cada factor
-        const finalScore = ((wordCountScore * 0.5) + (topicRelevanceScore * 0.5)).toFixed(1);
-
-        let resultMessage = `<p class="grade-title">Resultados del Análisis AI</p>`;
-        resultMessage += `<p class="grade-desc">El Asistente AI ha procesado tu texto, considerando el grado **${descriptions[selectedGrade].title}** y el tema **"${topic}"**.</p>`;
-        resultMessage += `<p class="grade-desc">  - **Palabras detectadas:** ${wordCount}</p>`;
-        resultMessage += `<p class="grade-desc">  - **Puntuación de Extensión:** ${wordCountScore.toFixed(1)}/10</p>`;
-        resultMessage += `<p class="grade-desc">  - **Puntuación de Relevancia del Tema:** ${topicRelevanceScore.toFixed(1)}/10</p>`;
-        resultMessage += `<p class="grade-desc">  - **Puntuación Final Combinada:** <span style="font-size: 1.2rem; font-weight: bold; color: var(--accent-color);">${finalScore}/10</span></p>`;
-
-        if (finalScore >= 8) {
-            resultMessage += `<p class="grade-desc">¡Análisis completado con éxito! Tu texto demuestra una excelente extensión y una gran relevancia con el tema. ¡Magnífico trabajo!</p>`;
-            showGesture('thumb-up');
-        } else if (finalScore >= 5) {
-            resultMessage += `<p class="grade-desc">Análisis completo. Tu texto tiene una buena base, pero puedes mejorarlo añadiendo más detalles o asegurándote de que todas las ideas se relacionen con el tema.</p>`;
-            showGesture('hand-wave');
+function processInput(input) {
+    const cleanedInput = input.trim().toLowerCase();
+    
+    if (state === 'ask_grade') {
+        const gradeName = gradeMap[cleanedInput];
+        const gradeNumber = Object.keys(gradeMap).find(key => gradeMap[key].toLowerCase() === cleanedInput);
+        
+        if (gradeName) {
+            selectedGrade = gradeNumber;
+            state = 'ask_topic';
+            const message = responses.ask_topic.text.replace('${grade}', gradeName);
+            updateAvatar(responses.ask_topic.avatar, responses.ask_topic.jump);
+            setTimeout(() => displayMessage(message), 500);
         } else {
-            resultMessage += `<p class="grade-desc">Análisis completo. La extensión o la relevancia del texto es limitada. Se recomienda expandirlo o revisar la conexión con el tema para mejorar la puntuación.</p>`;
-            showGesture('hand-wave');
+            updateAvatar(responses.error.avatar, responses.error.jump);
+            setTimeout(() => displayMessage(responses.error.text), 500);
         }
+    } else if (state === 'ask_topic') {
+        const [topic, ...textParts] = cleanedInput.split(':').map(part => part.trim());
+        const text = textParts.join(':');
 
-        displayAnalyzeStatus('Análisis de texto completado.', false);
-        resultTitle.innerHTML = '';
-        resultText.innerHTML = resultMessage;
-    }, 2000);
+        if (text && topic) {
+            state = 'processing';
+            updateAvatar(responses.processing_text.avatar, responses.processing_text.jump);
+            displayMessage(responses.processing_text.text);
+            
+            // Simular el análisis y la respuesta
+            setTimeout(() => {
+                const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+                const difficulty = difficultyFactors[selectedGrade] || 100;
+                const wordCountScore = Math.min((wordCount / difficulty) * 10, 10);
+                
+                const relevanceCount = topic.split(/\s+/).filter(word => text.includes(word)).length;
+                const topicRelevanceScore = (relevanceCount / topic.split(/\s+/).length) * 10;
+                
+                const finalScore = ((wordCountScore * 0.5) + (topicRelevanceScore * 0.5)).toFixed(1);
+                
+                let quality = 'limitada';
+                if (finalScore >= 8) {
+                    quality = 'excelente y muy relevante';
+                } else if (finalScore >= 5) {
+                    quality = 'buena, pero se puede mejorar';
+                }
+                
+                const resultMessage = responses.final_result.text.replace('[calidad]', quality);
+                updateAvatar(responses.final_result.avatar, responses.final_result.jump);
+                displayMessage(`Análisis completado. Tu texto es **${quality}** con una puntuación de **${finalScore}/10**. ¿Puedo ayudarte con algo más?`);
+                state = 'ask_more';
+            }, 2000);
+            
+        } else {
+            updateAvatar(responses.error.avatar, responses.error.jump);
+            setTimeout(() => displayMessage('Por favor, ingresa el tema seguido de tu texto, como: "El agua: El agua es un recurso vital..."'), 500);
+        }
+    } else if (state === 'ask_more') {
+        if (cleanedInput.includes('no') || cleanedInput.includes('gracias')) {
+            updateAvatar(responses.ask_grade.avatar, responses.ask_grade.jump);
+            setTimeout(() => displayMessage('¡De nada! Si me necesitas, aquí estaré. Adiós.'), 500);
+            state = 'ask_grade';
+            selectedGrade = null;
+            setTimeout(() => displayMessage(responses.ask_grade.text), 2000);
+        } else {
+            updateAvatar(responses.ask_topic.avatar, responses.ask_topic.jump);
+            setTimeout(() => displayMessage('¿Qué más necesitas?'), 500);
+            state = 'ask_topic';
+        }
+    }
 }
 
-buttons.forEach(btn => btn.addEventListener('click', () => selectGrade(btn.dataset.grade)));
-analyzeBtn.addEventListener('click', analyzeDocument);
-
-resetBtn.addEventListener('click', () => {
-    buttons.forEach(b => b.dataset.selected = 'false');
-    selectedGrade = null;
-    resultTitle.textContent = 'Información Detallada';
-    resultText.textContent = 'El Asistente AI está esperando tu selección de grado o la introducción de un texto para analizar.';
-    displayAiMessage('✨ Hola, soy tu Asistente Inteligente. Por favor, selecciona tu grado escolar para empezar.');
-    textSection.style.display = 'none';
-    analyzeStatus.style.display = 'none';
-    documentText.value = '';
-    topicInput.value = '';
-    showGesture('hand-wave');
+sendBtn.addEventListener('click', () => {
+    const input = userInput.value;
+    if (input.trim() === '') return;
+    displayMessage(input, 'user');
+    userInput.value = '';
+    processInput(input);
 });
 
-window.onload = function() {
-    setTimeout(function() {
-        loadingScreen.style.opacity = '0';
-        setTimeout(function() {
-            loadingScreen.style.display = 'none';
-            mainInterface.style.display = 'grid';
-            showGesture('hand-wave');
-        }, 1000);
-    }, 3000);
+userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        sendBtn.click();
+    }
+});
+
+// Mensaje de bienvenida inicial
+window.onload = () => {
+    displayMessage(responses.ask_grade.text);
+    updateAvatar(responses.ask_grade.avatar, responses.ask_grade.jump);
 };
