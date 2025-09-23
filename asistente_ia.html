@@ -8,13 +8,15 @@
 </head>
 
 <body>
-    <div class="ai-avatar-fixed-container">
-        <img id="aiAvatar" src="RR2.png" alt="Asistente AI">
-    </div>
-
-    <main class="chat-interface" id="main-interface" role="main">
-        <div class="chat-box" id="chatBox">
+    <main class="chat-container" id="main-interface" role="main">
+        <div class="chat-header">
+            <div class="ai-avatar-small-container">
+                <img id="aiAvatar" src="RR2.png" alt="Asistente AI">
+            </div>
+            <h2>Asistente Inteligente</h2>
         </div>
+        <div class="chat-box" id="chatBox">
+            </div>
         <div class="input-container">
             <input type="text" id="userInput" placeholder="Escribe tu respuesta aquí..." autofocus>
             <button id="sendBtn" class="send-btn">Enviar</button>
