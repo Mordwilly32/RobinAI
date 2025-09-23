@@ -1,93 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Chat AI+ Asistente</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROBIN.AI - La IA que te ayuda en la escuela</title>
+    <link rel="stylesheet" href="main.css">
 </head>
-
 <body>
-    <div id="loading-screen">
-        <div class="loader-cube"></div>
-        <div class="loading-text">Iniciando Asistente AI...</div>
-    </div>
-
-    <main class="chat-app-container" id="main-interface" role="main">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <button class="new-chat-btn">
-                    <span class="material-icons">add</span> Nuevo chat
-                </button>
-            </div>
-            <div class="search-bar">
-                <span class="material-icons">search</span>
-                <input type="text" placeholder="Buscar chats...">
-            </div>
-            <nav class="conversations-list">
-                <p class="section-title">Tus conversaciones</p>
-                <a href="#" class="conversation-item active">
-                    <span class="material-icons">chat_bubble_outline</span>
-                    <span>Grado escolar</span>
-                </a>
-                <a href="#" class="conversation-item">
-                    <span class="material-icons">auto_awesome</span>
-                    <span>Análisis de texto</span>
-                </a>
-            </nav>
-            <div class="user-profile">
-                <img src="https://i.imgur.com/Kz4mQ3k.png" alt="User Avatar" class="user-avatar">
-                <span>Usuario Demo</span>
-                <span class="material-icons settings-icon">settings</span>
-            </div>
-        </aside>
-
-        <div class="chat-main-content">
-            <header class="chat-header">
-                <div class="chat-title">
-                    <span class="material-icons">chat_bubble_outline</span>
-                    <h2>Grado escolar</h2>
-                </div>
-                <div class="chat-actions">
-                    <span class="material-icons">push_pin</span>
-                    <span class="material-icons">more_vert</span>
-                </div>
-            </header>
-
-            <div class="chat-area" id="chatArea" role="log">
-                <div class="ai-message initial-prompt">
-                    <img src="bird-ai.png" alt="AI Avatar" class="ai-avatar">
-                    <div class="message-content">
-                        <p>¡Hola! Soy tu Asistente Inteligente. Por favor, selecciona tu grado escolar para empezar.</p>
-                        <div class="grade-grid" id="gradeGrid" role="list">
-                            <button class="btn" data-grade="1">1º</button>
-                            <button class="btn" data-grade="2">2º</button>
-                            <button class="btn" data-grade="3">3º</button>
-                            <button class="btn" data-grade="4">4º</button>
-                            <button class="btn" data-grade="5">5º</button>
-                            <button class="btn" data-grade="6">6º</button>
-                            <button class="btn" data-grade="7">7º</button>
-                            <button class="btn" data-grade="8">8º</button>
-                            <button class="btn" data-grade="9">9º</button>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-
-            <div class="chat-input-area">
-                <textarea id="userInput" placeholder="Escribe tu mensaje..."></textarea>
-                <button id="sendBtn" class="send-btn">
-                    <span class="material-icons">send</span>
-                </button>
-                <div class="upgrade-to-pro">
-                    <span>Upgrade to Pro</span>
-                    <span class="material-icons">star</span>
-                </div>
+    <div class="hero">
+        <div class="navbar animate-fade-in">
+            <div class="logo">ROBIN.AI</div>
+            <div class="nav-links">
+                <a href="#about">Acerca de</a>
+                <a href="#project">Nuestro Proyecto</a>
+                <a href="#fusalmo">FUSALMO</a>
             </div>
         </div>
-    </main>
+        <div class="hero-content">
+            <h1 class="animate-slide-up delay-1">La nueva IA, creada para ayudar a cualquiera en la escuela</h1>
+            <p class="animate-slide-up delay-2">Robin estará con mucho gusto en ayudarte con cualquier tarea, para guiarte!</p>
+            <a href="asistente_ia.html" class="cta-button animate-slide-up delay-3">Acceder a IA</a>
+        </div>
+    </div>
+
+    <section id="about" class="content-section">
+        <h2>¿Qué es ROBIN.AI?</h2>
+        <p>Somos parte del equipo de **Constructores Tecnológicos** de la competencia STEAM Passion. Nuestro objetivo es crear una inteligencia artificial que actúe como una herramienta de apoyo para los estudiantes en sus tareas escolares, facilitando el aprendizaje y la investigación.</p>
+    </section>
+
+    <section id="project" class="content-section">
+        <h2>STEAM Passion</h2>
+        <p>STEAM Passion es una competencia nacional de El Salvador que fomenta el desarrollo de habilidades en ciencia, tecnología, ingeniería, arte y matemáticas (STEAM). Es una plataforma para que jóvenes como nosotros apliquen sus conocimientos y creen soluciones innovadoras para problemas reales.</p>
+        <p>Nosotros, como **Constructores Tecnológicos**, nos enfocamos en la creación de soluciones de software y hardware que faciliten la vida de las personas, siendo Robin un claro ejemplo de nuestro compromiso.</p>
+    </section>
+
+    <section id="fusalmo" class="content-section">
+        <h2>FUSALMO</h2>
+        <p>FUSALMO (Fundación Salvador del Mundo) es una organización sin fines de lucro en El Salvador dedicada a la educación y el desarrollo de jóvenes. Ellos son los organizadores de la competencia STEAM Passion y promueven activamente la inclusión tecnológica y la formación integral en el país.</p>
+    </section>
 
     <script src="script.js"></script>
 </body>
