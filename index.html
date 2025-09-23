@@ -3,105 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
-    <style>
-        :root {
-            --bg-color: #0d1a26;
-            --card-color: #1a2a3a;
-            --accent-color: #00bcd4;
-            --text-color: #e0f2f7;
-            --muted-text-color: #8c9ea7;
-            --border-color: rgba(0, 188, 212, 0.3);
-            --shadow-color: rgba(0, 188, 212, 0.2);
-            --glow-color: rgba(0, 188, 212, 0.4);
-            --gradient-start: #0a131b;
-            --gradient-end: #0f2027;
-        }
-        
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            text-align: center;
-        }
-        
-        .main-card {
-            background: var(--card-color);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px var(--shadow-color);
-            max-width: 600px;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-        
-        h1 {
-            font-size: 3rem;
-            color: var(--accent-color);
-            text-shadow: 0 0 15px rgba(0, 188, 212, 0.8);
-            margin-bottom: 20px;
-        }
-        
-        p {
-            font-size: 1.2rem;
-            color: var(--muted-text-color);
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: var(--accent-color);
-            color: var(--bg-color);
-            padding: 15px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px var(--glow-color);
-        }
-        
-        .cta-button:active {
-            transform: translateY(0);
-        }
-        
-        .footer {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: var(--muted-text-color);
-        }
-    </style>
+    <title>El nuevo estándar en análisis de datos</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div class="main-card">
-        <h1>Bienvenido al Portal AI</h1>
-        <p>
-            Descubre un nuevo mundo de conocimiento y aprendizaje.
-            Nuestro Asistente AI te ayuda a analizar textos y mejorar tus habilidades educativas.
-            ¡Es el futuro de la educación, hoy!
-        </p>
-        <a href="asistente_ia.html" class="cta-button">Ingresar al Asistente AI</a>
-    </div>
-
-    <div class="footer">
-        Demo de Asistente AI avanzada.
+    <div class="hero">
+        <div class="navbar">
+            <div class="logo">VISTA.DT</div>
+            <div class="nav-links">
+                <a href="#">Soluciones</a>
+                <a href="#">Visión</a>
+                <a href="#">Programas</a>
+                <a href="#">Blog</a>
+            </div>
+        </div>
+        <div class="hero-content">
+            <h1>El nuevo estándar<br>en análisis de datos</h1>
+            <p>Usa los datos para una visión de 360 grados de tu negocio</p>
+            <a href="asistente_ia.html" class="cta-button">Más información</a>
+        </div>
     </div>
 </body>
 </html>
