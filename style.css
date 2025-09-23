@@ -1,13 +1,13 @@
 :root {
-    --bg-color: #1a1a2e;
-    --card-color: #272740;
+    --bg-color: #0d1a26;
+    --card-color: #1a2a3a;
     --accent-color: #00bcd4;
     --text-color: #e0f2f7;
     --muted-text-color: #8c9ea7;
     --shadow-color: rgba(0, 188, 212, 0.2);
     --glow-color: rgba(0, 188, 212, 0.4);
-    --gradient-start: #162a3e;
-    --gradient-end: #1d334a;
+    --gradient-start: #0a131b;
+    --gradient-end: #0f2027;
 }
 
 * {
@@ -19,47 +19,54 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
     color: var(--text-color);
-    display: flex; /* Cambiado de flex a block para manejar el avatar fijo */
+    display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    overflow: hidden; /* Evita barras de desplazamiento en el body */
+    padding: 24px;
+    overflow: hidden;
 }
 
-.ai-avatar-fixed-container {
-    position: fixed; /* Hace que el contenedor del avatar sea fijo */
-    top: 20px;       /* Distancia desde la parte superior */
-    left: 20px;      /* Distancia desde la izquierda */
-    width: 120px;    /* Ancho del contenedor del avatar */
-    height: 120px;   /* Alto del contenedor del avatar */
-    background: var(--card-color);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    z-index: 1000; /* Asegura que esté por encima del chat */
-    padding: 10px; /* Pequeño padding dentro del contenedor */
-}
-
-.ai-avatar-fixed-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.2s ease-in-out;
-}
-
-.chat-interface {
+.chat-container {
     width: 100%;
-    max-width: 800px; /* Un poco más de ancho para el chat */
-    height: 90vh; /* Ocupa la mayoría de la altura visible */
+    max-width: 800px; /* Un poco más de ancho para un look de chat */
+    height: 85vh;
     background: var(--card-color);
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
-    margin: auto; /* Centra el chat en la pantalla */
+    flex-direction: column;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--muted-text-color);
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.ai-avatar-small-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; /* Lo hace circular */
+    overflow: hidden;
+    background: var(--bg-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.ai-avatar-small-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.2s ease-in-out;
 }
 
 .chat-box {
@@ -71,6 +78,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 20px;
 }
 
 .chat-box::-webkit-scrollbar {
@@ -158,31 +166,14 @@ body {
 }
 
 .jump-animation {
-    animation: jump 0.6s ease-in-out infinite; /* Aplica la animación */
+    animation: jump 0.6s ease-in-out infinite;
 }
 
 /* Media Queries para pantallas más pequeñas */
 @media (max-width: 768px) {
-    .chat-interface {
+    .chat-container {
         width: 95%;
         height: 95vh;
         padding: 15px;
-    }
-
-    .ai-avatar-fixed-container {
-        width: 80px;
-        height: 80px;
-        top: 10px;
-        left: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .input-container {
-        flex-direction: column;
-    }
-
-    .send-btn {
-        width: 100%;
     }
 }
