@@ -8,18 +8,16 @@
 </head>
 
 <body>
-    <main class="container" id="main-interface" role="main">
-        <div class="ai-avatar-container">
-            <img id="aiAvatar" src="RR2.png" alt="Asistente AI">
-        </div>
+    <div class="ai-avatar-fixed-container">
+        <img id="aiAvatar" src="RR2.png" alt="Asistente AI">
+    </div>
 
-        <div class="chat-container">
-            <div class="chat-box" id="chatBox">
-                </div>
-            <div class="input-container">
-                <input type="text" id="userInput" placeholder="Escribe tu respuesta aquí..." autofocus>
-                <button id="sendBtn" class="send-btn">Enviar</button>
-            </div>
+    <main class="chat-interface" id="main-interface" role="main">
+        <div class="chat-box" id="chatBox">
+        </div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Escribe tu respuesta aquí..." autofocus>
+            <button id="sendBtn" class="send-btn">Enviar</button>
         </div>
     </main>
     <script src="script.js"></script>
