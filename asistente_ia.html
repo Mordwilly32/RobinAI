@@ -8,18 +8,40 @@
 </head>
 
 <body>
-    <main class="chat-container" id="main-interface" role="main">
-        <div class="chat-header">
-            <div class="ai-avatar-small-container">
-                <img id="aiAvatar" src="RR2.png" alt="Asistente AI">
+    <div id="loading-screen">
+        <div class="loader-cube"></div>
+        <div class="loading-text">Iniciando asistente AI...</div>
+    </div>
+
+    <main class="container" id="main-interface" role="main">
+        <div class="header-section">
+            <div class="ai-title">
+                <h1>Asistente Inteligente</h1>
+                <p class="lead">Tu compañero AI para educación y análisis de contenido.</p>
             </div>
-            <h2>Asistente Inteligente</h2>
         </div>
-        <div class="chat-box" id="chatBox">
+
+        <div class="ai-image-container">
+            <img id="thumb-up-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2JtOGhxd3hhNDZ4MDU3ZG5sOWQydXlnOHFia212NmQwdmF4enN0eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26BGGsR9l6M749rJS/giphy.gif" alt="Pulgar arriba">
+            <img id="hand-wave-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3d4b2N0czZjdWljcWd3ZzQ1dnExNnBmbWJscTh6NmtpYjV2aWpkeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o751UaH52m0k7Q18M/giphy.gif" alt="Mano saludando">
+        </div>
+
+        <div class="main-content-area">
+            <div class="ai-chat-box" aria-live="polite">
+                <div class="ai-message" id="aiPrompt">
+                    <span class="ai-icon">✨</span> Hola, soy tu Asistente Inteligente. Por favor, escribe el número de tu grado escolar (ej: "1" o "tercero") para empezar.
+                </div>
             </div>
-        <div class="input-container">
-            <input type="text" id="userInput" placeholder="Escribe tu respuesta aquí..." autofocus>
-            <button id="sendBtn" class="send-btn">Enviar</button>
+
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Escribe tu respuesta aquí..." autofocus>
+                <button id="sendBtn" class="send-btn">Enviar</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="clear-btn" id="resetBtn">Reiniciar Asistente</button>
+            <div class="footer">Demo de Asistente AI avanzada.</div>
         </div>
     </main>
     <script src="script.js"></script>
