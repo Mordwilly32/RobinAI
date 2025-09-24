@@ -1,6 +1,6 @@
 // ** Importante: Por seguridad, nunca subas tu API Key a un repositorio público como GitHub. **
 // Si estás trabajando en un proyecto local, puedes colocarla aquí para fines de prueba.
-const API_KEY = "TU_API_KEY_AQUI";
+const API_KEY = "AIzaSyBJ-lKPnwtJyguFP85Smz9I7y7JnGtyhEI";
 
 const descriptions = {
     1: {
@@ -209,3 +209,4 @@ window.onload = function() {
         }, 1000);
     }, 3000);
 };
+
