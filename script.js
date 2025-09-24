@@ -42,18 +42,16 @@ const descriptions = {
 };
 
 const difficultyFactors = {
-    1: 80, 2: 100, 3: 120, 4: 140, 5: 160, 7: 200, 8: 220, 9: 250
+    1: 80, 2: 100, 3: 120, 4: 140, 5: 160, 6: 180, 7: 200, 8: 220, 9: 250
 };
 
-// Elementos de la nueva interfaz
-const aiChatBox = document.getElementById('aiChatBox');
+// Elementos de la interfaz
+const chatBox = document.getElementById('chatBox');
 const userInput = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
-const thumbUpGif = document.getElementById('thumb-up-gif');
-const handWaveGif = document.getElementById('hand-wave-gif');
+const aiAvatar = document.getElementById('aiAvatar');
 const loadingScreen = document.getElementById('loading-screen');
 const mainInterface = document.getElementById('main-interface');
-const resetBtn = document.getElementById('resetBtn');
 
 let state = 'ask_grade';
 let selectedGrade = null;
@@ -67,112 +65,86 @@ const gradeMap = {
 
 function displayMessage(message, sender = 'ai') {
     const messageDiv = document.createElement('div');
-    messageDiv.classList.add('ai-message');
+    messageDiv.classList.add('message');
     if (sender === 'user') {
-        messageDiv.classList.remove('ai-message');
         messageDiv.classList.add('user-message');
-        messageDiv.innerHTML = `<p>${message}</p>`;
     } else {
-        messageDiv.innerHTML = `<span class="ai-icon">✨</span> ${message}`;
+        messageDiv.classList.add('ai-message');
     }
-    aiChatBox.appendChild(messageDiv);
-    aiChatBox.scrollTop = aiChatBox.scrollHeight;
+    messageDiv.innerHTML = `<p>${message}</p>`;
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function showGesture(gesture) {
-    thumbUpGif.style.display = 'none';
-    handWaveGif.style.display = 'none';
-    if (gesture === 'thumb-up') {
-        thumbUpGif.style.display = 'block';
-    } else if (gesture === 'hand-wave') {
-        handWaveGif.style.display = 'block';
-    }
+function updateAvatar(newSrc, shouldJump) {
+    aiAvatar.src = newSrc;
+    aiAvatar.classList.toggle('jump-animation', shouldJump);
 }
 
-async function processInput(input) {
+function processInput(input) {
     const cleanedInput = input.trim().toLowerCase();
-
+    
     if (state === 'ask_grade') {
         const gradeName = gradeMap[cleanedInput];
         const gradeNumber = Object.keys(gradeMap).find(key => gradeMap[key].toLowerCase() === cleanedInput);
-
+        
         if (gradeName) {
             selectedGrade = gradeNumber;
-            state = 'ask_topic_text';
-            setTimeout(() => displayMessage(`¡Perfecto! Has seleccionado el grado **${gradeName}**. Ahora, dime en qué te puedo ayudar o qué texto quieres que revise.`), 500);
-            showGesture('hand-wave');
+            state = 'ask_topic';
+            const message = `¡Perfecto! Has seleccionado el grado **${gradeName}**. Ahora, dime en qué te puedo ayudar o qué texto quieres que revise.`;
+            updateAvatar("RR2.png", true); // Asegúrate de tener estas imágenes
+            setTimeout(() => displayMessage(message), 500);
         } else {
-            setTimeout(() => displayMessage('Lo siento, no entendí tu respuesta. Por favor, intenta de nuevo. Escribe el número o el nombre completo del grado.'), 500);
-            showGesture('hand-wave');
+            updateAvatar("RR3.png", true); // Asegúrate de tener estas imágenes
+            setTimeout(() => displayMessage('Lo siento, no entendí tu respuesta. Por favor, intenta de nuevo.'), 500);
         }
+    } else if (state === 'ask_topic') {
+        const [topic, ...textParts] = cleanedInput.split(':').map(part => part.trim());
+        const text = textParts.join(':');
 
-    } else if (state === 'ask_topic_text') {
-        const parts = cleanedInput.split(':').map(part => part.trim());
-        let topic = '';
-        let text = '';
-        
-        if (parts.length > 1) {
-            topic = parts[0];
-            text = parts.slice(1).join(':');
-        } else {
-            // Asume que todo es texto si no hay ":"
-            text = cleanedInput;
-        }
-
-        if (text) {
+        if (text && topic) {
             state = 'processing';
+            updateAvatar("RR3.png", true);
             displayMessage('Estoy procesando la información. Esto podría tardar un momento...');
-            showGesture('hand-wave');
-
-            const prompt = `Actúa como un profesor que revisa el trabajo de un estudiante de ${descriptions[selectedGrade].title}. El texto es sobre el tema "${topic}". Evalúa el texto basándote en su calidad, originalidad, ortografía y relevancia para el tema. Da una puntuación del 1 al 10 y un comentario.
             
-            Texto del estudiante: "${text}"`;
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: prompt }]
-                        }]
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error en la llamada a la API: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                const aiResponse = data.candidates[0].content.parts[0].text;
+            // Simular el análisis y la respuesta
+            setTimeout(() => {
+                const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+                const difficulty = difficultyFactors[selectedGrade] || 100;
+                const wordCountScore = Math.min((wordCount / difficulty) * 10, 10);
                 
-                displayMessage(aiResponse);
-                showGesture('thumb-up');
+                const relevanceCount = topic.split(/\s+/).filter(word => text.includes(word)).length;
+                const topicRelevanceScore = (relevanceCount / topic.split(/\s+/).length) * 10;
+                
+                const finalScore = ((wordCountScore * 0.5) + (topicRelevanceScore * 0.5)).toFixed(1);
+                
+                let quality = 'limitada';
+                if (finalScore >= 8) {
+                    quality = 'excelente y muy relevante';
+                } else if (finalScore >= 5) {
+                    quality = 'buena, pero se puede mejorar';
+                }
+                
+                updateAvatar("RR2.png", true);
+                displayMessage(`Análisis completado. Tu texto es **${quality}** con una puntuación de **${finalScore}/10**. ¿Puedo ayudarte con algo más?`);
                 state = 'ask_more';
-            } catch (error) {
-                console.error("Error al obtener la respuesta de la IA:", error);
-                displayMessage('Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
-                showGesture('hand-wave');
-                state = 'ask_topic_text'; // Vuelve al estado para que el usuario pueda intentar de nuevo
-            }
+            }, 2000);
+            
         } else {
-            displayMessage('Por favor, ingresa el tema seguido de tu texto, como: "El agua: El agua es un recurso vital..." o solo el texto para una evaluación general.');
-            showGesture('hand-wave');
+            updateAvatar("RR3.png", true);
+            setTimeout(() => displayMessage('Por favor, ingresa el tema seguido de tu texto, como: "El agua: El agua es un recurso vital..."'), 500);
         }
-
     } else if (state === 'ask_more') {
-        if (cleanedInput.includes('no') || cleanedInput.includes('gracias') || cleanedInput.includes('adios')) {
+        if (cleanedInput.includes('no') || cleanedInput.includes('gracias')) {
+            updateAvatar("RR2.png", true);
             setTimeout(() => displayMessage('¡De nada! Si me necesitas, aquí estaré. Adiós.'), 500);
             state = 'ask_grade';
             selectedGrade = null;
             setTimeout(() => displayMessage('✨ Hola, soy tu Asistente Inteligente. Por favor, escribe el número de tu grado escolar (ej: "1" o "tercero") para empezar.'), 2000);
-            showGesture('hand-wave');
         } else {
+            updateAvatar("RR2.png", true);
             setTimeout(() => displayMessage('¿Qué más necesitas?'), 500);
-            showGesture('hand-wave');
-            state = 'ask_topic_text';
+            state = 'ask_topic';
         }
     }
 }
@@ -191,22 +163,15 @@ userInput.addEventListener('keypress', (e) => {
     }
 });
 
-resetBtn.addEventListener('click', () => {
-    aiChatBox.innerHTML = '';
-    state = 'ask_grade';
-    selectedGrade = null;
-    displayMessage('✨ Hola, soy tu Asistente Inteligente. Por favor, escribe el número de tu grado escolar (ej: "1" o "tercero") para empezar.');
-    showGesture('hand-wave');
-});
-
-window.onload = function() {
+// Mensaje de bienvenida inicial
+window.onload = () => {
     setTimeout(function() {
         loadingScreen.style.opacity = '0';
         setTimeout(function() {
             loadingScreen.style.display = 'none';
-            mainInterface.style.display = 'grid';
-            showGesture('hand-wave');
+            mainInterface.style.display = 'flex';
+            displayMessage('✨ Hola, soy tu Asistente Inteligente. Por favor, escribe el número de tu grado escolar (ej: "1" o "tercero") para empezar.');
+            updateAvatar("RR2.png", true);
         }, 1000);
     }, 3000);
 };
-
