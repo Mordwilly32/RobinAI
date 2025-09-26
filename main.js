@@ -1,17 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Retraso para dar tiempo a que la página se cargue visualmente
     setTimeout(() => {
         const navbar = document.querySelector('.navbar');
-        const heroContentElements = document.querySelectorAll('.hero-content .animate-slide-up');
+        const heroContentElements = document.querySelectorAll('.hero-content .animate-slide-up, .content-section .animate-slide-up, .animate-fade-in');
 
-        // Muestra la barra de navegación
         if (navbar) {
             navbar.classList.add('visible');
         }
 
-        // Muestra los elementos del contenido principal uno por uno
-        heroContentElements.forEach(element => {
-            element.classList.add('visible');
+        heroContentElements.forEach((element, index) => {
+            setTimeout(() => {
+                element.classList.add('visible');
+            }, index * 150); // Delay animado
         });
-    }, 50); // Un pequeño retraso para asegurar que los estilos se apliquen
+    }, 50);
 });
