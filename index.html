@@ -1,98 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROBIN.AI - La IA que te ayuda en la escuela</title>
-    <link rel="stylesheet" href="main.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ROBIN.AI - La IA que te ayuda en la escuela</title>
+
+  <!-- Google Font (opcional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="navbar animate-fade-in">
-            <div class="logo">ROBIN.AI</div>
-            <div class="nav-links">
-                <a href="#about">Acerca de</a>
-                <a href="#project">STEAM Passion</a>
-                <a href="#fusalmo">FUSALMO</a>
-                <a href="#impacto">Impacto</a>
-            </div>
-        </div>
-        <div class="hero-content">
-            <h1 class="animate-slide-up delay-1">La nueva IA, creada para ayudarte en la escuela</h1>
-            <p class="animate-slide-up delay-2">Robin estará a tu lado para apoyarte en tus tareas, orientarte y facilitar tu aprendizaje de manera sencilla y divertida.</p>
-            <a href="asistente_ia.html" class="cta-button animate-slide-up delay-3">Acceder a IA</a>
-        </div>
+  <!-- NAVBAR -->
+  <header class="navbar animate-fade-in" role="banner" aria-label="Navegación principal">
+    <div class="nav-inner">
+      <div class="brand">
+        <img src="logo.png" alt="Logo ROBIN.AI" class="brand-img" onerror="this.style.display='none'">
+        <span class="brand-title">ROBIN.AI</span>
+      </div>
+      <nav class="nav-links" role="navigation" aria-label="Enlaces principales">
+        <a href="#about">Acerca de</a>
+        <a href="#project">STEAM Passion</a>
+        <a href="#fusalmo">FUSALMO</a>
+        <a href="#impacto">Impacto</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Sección ¿Qué es ROBIN.AI? -->
-    <section id="about" class="content-section">
-        <div class="content-card animate-slide-up">
-            <img src="RR1.png" alt="ROBIN.AI Logo" class="content-img">
-            <div class="content-text">
-                <h2>¿Qué es ROBIN.AI?</h2>
-                <p><strong>ROBIN.AI</strong> es un asistente de inteligencia artificial diseñado especialmente para estudiantes. Su objetivo es facilitar el acceso a la información, resolver dudas académicas y ser una guía confiable en el proceso de aprendizaje.</p>
-                <p>Forma parte del proyecto de los <strong>Constructores Tecnológicos</strong>, un equipo enfocado en aprovechar la tecnología para impactar positivamente la educación en El Salvador y más allá.</p>
-                <ul>
-                    <li>✔️ Responde preguntas de distintas materias</li>
-                    <li>✔️ Acompaña en investigaciones escolares</li>
-                    <li>✔️ Promueve el aprendizaje autónomo</li>
-                </ul>
-            </div>
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-inner container">
+        <div class="hero-left">
+          <h1 class="animate-slide-up animate-seq">La IA creada para ayudar a cualquiera en la escuela</h1>
+          <p class="subtext animate-slide-up animate-seq delay-1">ROBIN te acompaña con explicaciones claras, ejemplos y guías paso a paso para tus tareas y proyectos.</p>
+          <div class="hero-cta animate-scale animate-seq delay-2">
+            <a class="cta-button" href="asistente_ia.html">Abrir asistente</a>
+            <a class="ghost" href="#about">Saber más</a>
+          </div>
+
+          <ul class="hero-features animate-fade-in delay-3">
+            <li>✔ Resuelve dudas rápidas</li>
+            <li>✔ Ayuda con investigaciones y resúmenes</li>
+            <li>✔ Disponible en el móvil y escritorio</li>
+          </ul>
         </div>
+
+        <div class="hero-right animate-fade-in delay-1">
+          <!-- Imagen ilustrativa (usa tu RR1.png) -->
+          <img src="RR1.png" alt="Ilustración ROBIN" class="hero-art" onerror="this.src='F2.png'">
+        </div>
+      </div>
+
+      <!-- SVG wave divider -->
+      <div class="hero-wave" aria-hidden="true">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path fill="#071424" d="M0,64 C360,120 1080,0 1440,64 L1440 120 L0 120 Z"></path></svg>
+      </div>
     </section>
 
-    <!-- Sección STEAM Passion -->
-    <section id="project" class="content-section">
-        <div class="content-card animate-slide-up">
-            <img src="F2.png" alt="STEAM Passion" class="content-img">
-            <div class="content-text">
-                <h2>STEAM Passion</h2>
-                <p><strong>STEAM Passion</strong> es una competencia nacional en El Salvador que impulsa a los jóvenes a desarrollar proyectos en ciencia, tecnología, ingeniería, arte y matemáticas.</p>
-                <p>Es una plataforma que permite a los estudiantes aprender haciendo, innovar con propósito y compartir sus ideas con el mundo.</p>
-                <p>En nuestra participación, los <strong>Constructores Tecnológicos</strong> presentamos ROBIN.AI como una solución para que más estudiantes tengan acceso a herramientas inteligentes de aprendizaje.</p>
-            </div>
+    <!-- ABOUT -->
+    <section id="about" class="content-section container">
+      <div class="content-card animate-slide-up">
+        <img src="RR1.png" alt="ROBIN.AI logo/retrato" class="content-img" onerror="this.style.display='none'">
+        <div class="content-text">
+          <h2>¿Qué es ROBIN.AI?</h2>
+          <p><strong>ROBIN.AI</strong> es un asistente educativo diseñado por <em>Constructores Tecnológicos</em> para apoyar a estudiantes en sus tareas: explicaciones, ejemplos, pasos y orientación para investigar.</p>
+
+          <h3>¿Qué puede hacer?</h3>
+          <ul>
+            <li>Explicar conceptos en lenguaje simple y con ejemplos.</li>
+            <li>Generar esquemas y resúmenes para estudiar.</li>
+            <li>Ayudar a planificar proyectos y experimentos.</li>
+          </ul>
         </div>
+      </div>
     </section>
 
-    <!-- Sección FUSALMO -->
-    <section id="fusalmo" class="content-section">
-        <div class="content-card animate-slide-up delay-2">
-            <img src="F1.png" alt="FUSALMO" class="content-img">
-            <div class="content-text">
-                <h2>FUSALMO</h2>
-                <p><strong>FUSALMO (Fundación Salvador del Mundo)</strong> es una organización sin fines de lucro en El Salvador que trabaja en la educación integral de los jóvenes.</p>
-                <p>Su misión es brindar oportunidades educativas, culturales y tecnológicas que permitan a los jóvenes crecer como líderes y agentes de cambio.</p>
-                <ul>
-                    <li>📚 Educación de calidad para todos</li>
-                    <li>🤝 Inclusión social y tecnológica</li>
-                    <li>🌎 Formación de líderes con visión global</li>
-                </ul>
-            </div>
+    <!-- STEAM Passion -->
+    <section id="project" class="content-section container">
+      <div class="section-header animate-fade-in">
+        <h2>STEAM Passion</h2>
+        <p>Competencia nacional que impulsa proyectos en ciencia, tecnología, ingeniería, arte y matemáticas. Aquí presentamos soluciones que integran hardware y software con impacto social.</p>
+      </div>
+
+      <div class="content-card reverse animate-slide-up delay-1">
+        <img src="F2.png" alt="STEAM Passion" class="content-img" onerror="this.style.display='none'">
+        <div class="content-text">
+          <h3>Nuestro proyecto en STEAM</h3>
+          <p>Participamos con ROBIN.AI como herramienta de apoyo al estudiantado. Buscamos facilitar el acceso a recursos y reducir la brecha educativa usando tecnología responsable.</p>
+          <p><strong>Componentes:</strong> interfaz web, modelo de respuestas adaptativas, y material didáctico abierto.</p>
         </div>
+      </div>
     </section>
 
-    <!-- Sección Impacto -->
-    <section id="impacto" class="content-section">
-        <h2 class="animate-fade-in">Nuestro Impacto</h2>
-        <p class="animate-slide-up delay-1">ROBIN.AI busca transformar la forma en que los estudiantes se relacionan con el conocimiento, ofreciendo una herramienta moderna y accesible.</p>
-        <div class="impact-grid">
-            <div class="impact-card animate-slide-up">
-                <h3>🎯 Misión</h3>
-                <p>Facilitar el aprendizaje a través de la inteligencia artificial, brindando apoyo personalizado a estudiantes en sus estudios diarios.</p>
-            </div>
-            <div class="impact-card animate-slide-up delay-2">
-                <h3>🚀 Visión</h3>
-                <p>Convertirse en una de las principales plataformas educativas en Latinoamérica, siendo un puente entre los jóvenes y la tecnología.</p>
-            </div>
-            <div class="impact-card animate-slide-up delay-3">
-                <h3>💡 Valores</h3>
-                <p>Innovación, accesibilidad, inclusión y compromiso con el desarrollo integral de los estudiantes.</p>
-            </div>
+    <!-- FUSALMO -->
+    <section id="fusalmo" class="content-section container">
+      <div class="section-header animate-fade-in">
+        <h2>FUSALMO</h2>
+        <p>FUSALMO (Fundación Salvador del Mundo) promueve oportunidades educativas y tecnológicas para jóvenes en El Salvador.</p>
+      </div>
+
+      <div class="content-card animate-slide-up delay-2">
+        <img src="F1.png" alt="FUSALMO" class="content-img" onerror="this.style.display='none'">
+        <div class="content-text">
+          <h3>Colaboración y apoyo</h3>
+          <p>FUSALMO organiza iniciativas como STEAM Passion y apoya proyectos que fomentan la inclusión tecnológica y la formación integral.</p>
+          <ul>
+            <li>Programas de formación</li>
+            <li>Workshops y mentorías</li>
+            <li>Becas y recursos educativos</li>
+          </ul>
         </div>
+      </div>
     </section>
 
-    <script src="main.js"></script>
+    <!-- IMPACTO -->
+    <section id="impacto" class="content-section container">
+      <h2 class="animate-fade-in">Impacto y objetivos</h2>
+      <p class="animate-slide-up">ROBIN busca transformar el aprendizaje: accesible, práctico y adaptado a estudiantes de primaria a bachillerato.</p>
+
+      <div class="impact-grid">
+        <div class="impact-card animate-pop">
+          <h3>Misión</h3>
+          <p>Brindar apoyo inteligente para que más estudiantes logren resultados y desarrollen pensamiento crítico.</p>
+        </div>
+        <div class="impact-card animate-pop delay-1">
+          <h3>Visión</h3>
+          <p>Ser una herramienta educativa de referencia en la región, accesible y confiable.</p>
+        </div>
+        <div class="impact-card animate-pop delay-2">
+          <h3>Valores</h3>
+          <p>Accesibilidad, ética, innovación y colaboración.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer container">
+      <p>© <span id="year"></span> ROBIN.AI — Constructores Tecnológicos · Hecho en El Salvador</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
 </body>
 </html>
 
